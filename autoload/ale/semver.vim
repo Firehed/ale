@@ -24,6 +24,17 @@ function! ale#semver#GetVersion(executable, version_lines) abort
         endif
     endfor
 
+    " If no X.Y.Z was found, try again to see if just X.Y exists
+    for l:line in a:version_lines
+        let l:match = matchlist(l:line, '\v(\d+)\.(\d+)')
+
+        if !empty(l:match)
+            let l:version = [l:match[1] + 0, l:match[2] + 0, 0]
+            let s:version_cache[a:executable] = l:version
+            break
+        endif
+    endfor
+
     return l:version
 endfunction
 
