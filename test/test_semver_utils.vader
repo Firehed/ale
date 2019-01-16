@@ -8,6 +8,11 @@ Execute(GetVersion should return the version from the lines of output):
   \ '1.2.3',
   \])
 
+Execute(GetVersion should detect an implicit .0 release):
+  AssertEqual [0, 11, 0], ale#semver#GetVersion('dummy', [
+  \ 'PHPStan - PHP Static Analysis Tool 0.11',
+  \])
+
 Execute(GetVersion should return an empty list when no vesrion can be found):
   AssertEqual [], ale#semver#GetVersion('dummy', ['x'])
   AssertEqual [], ale#semver#GetVersion('dummy', [])
